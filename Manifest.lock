@@ -1,0 +1,24 @@
+PODS:
+  - Moscapsule (0.5.2)
+  - OpenSSL-Universal (1.0.1.19)
+
+DEPENDENCIES:
+  - Moscapsule (from `https://github.com/flightonary/Moscapsule.git`)
+  - OpenSSL-Universal (~> 1.0.1.18)
+
+EXTERNAL SOURCES:
+  Moscapsule:
+    :git: https://github.com/flightonary/Moscapsule.git
+
+CHECKOUT OPTIONS:
+  Moscapsule:
+    :commit: fbedd47dc5fd976ea495fc9a44d40414c0422854
+    :git: https://github.com/flightonary/Moscapsule.git
+
+SPEC CHECKSUMS:
+  Moscapsule: 16da766e698792911aafd11d9a26c6dbc42199f4
+  OpenSSL-Universal: 07489b0316f0f4f53c928e402e2ecbbedf96d93b
+
+PODFILE CHECKSUM: 50124482c4333068b7b9fcdd99253c0c558bdfbd
+
+COCOAPODS: 1.0.1
