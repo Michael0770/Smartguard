@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0810"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "10678D210F21BC1CD194DC903C42DE01"
+               BlueprintIdentifier = "01B6B5018603F6CFBCA6EE683F488335"
                BuildableName = "Pods_SmartGuard.framework"
                BlueprintName = "Pods-SmartGuard"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "10678D210F21BC1CD194DC903C42DE01"
+            BlueprintIdentifier = "01B6B5018603F6CFBCA6EE683F488335"
             BuildableName = "Pods_SmartGuard.framework"
             BlueprintName = "Pods-SmartGuard"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "10678D210F21BC1CD194DC903C42DE01"
-            BuildableName = "Pods_SmartGuard.framework"
-            BlueprintName = "Pods-SmartGuard"
-            ReferencedContainer = "container:Pods.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
