@@ -46,6 +46,8 @@ CPU, and it provides a command line instructions to run MJPG Streamer, this will
 line instructions to create the stream when the server is running. We use the command “raspistill” to capture the picture from the camera module every 50 milliseconds and configure the input and out of the MJPG streamer by setting up the “input_raspi.so” and “output_http.so” files which enable the MJPG Streamer to stream the JPEG frames to the html page. The user can start the stream by send a request to the server to start capture pictures from the camera module and
 get the stream web page by send another request to the server. The workflow is shown in the following figure.
 
+ ![ See image below :](https://github.com/Michael0770/smartguard/blob/master/workflow%20of%20video%20stream.png)
+
 #### 3.3 Twilio Framework
 The Twilio Framework is used to stream the voice between the server (Raspberry Pi) and client application. Since audio is essentially a temporal signal compared to the spatial feature of video, it requires more algorithm and technology to sample the voice with a high frequency in order to achieve a real-time and high QOS audio transfer. Hence, we have tried a lot of third party frameworks to handle the voice stream between iOS application (written in swift) and Raspberry Pi server(written in node.js) such as OpenWebRTC, EasyRTC, PeerJS, QuickBlox and Skylink, but unfortunately they were all written in Objective-C which were difficult for us to bridge OC with swift as we are not an expert in Objective-C so if there are a framework that provide a swift version and is easy to be installed will save our life to struggle in how to perform a real time voice stream between swift and node.js. We finally chose Twilio.
 
