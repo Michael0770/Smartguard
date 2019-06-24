@@ -1,13 +1,12 @@
 # Smartguard
 
-## Index
 
-### Introductions
+## Introductions
 
 This project consists of three components which are a Raspberry Pi with a PIR motion sensor, another Raspberry Pi with a speaker and camera that combined with a microphone and a IOS client end based on Swift.
 
 
-### Objectives
+### 1. IOT Project architecture
 
 Specially, the first part is a Raspberry Pi connected with a PIR Motion sensor performing the motion detection function. As one of our project’s function is to monitor the outside in front of the door and send the notification to users when a specific motion is detected, the Raspberry Pi is chosen as a server based on the Node JS and MQTT protocol. The PIR Motion sensor is also our choice because it is easy to use and can detect the motion of a warm body within the range of five or six meters. On the Raspberry Pi, a server named Mosquitto using the MQTT protocol is setted up and it will run automatically when the the Raspberry Pi running. A JS format file including the code of controlling the motion sensor and the Mosquitto clients to publish the notification to the Mosquitto server will be executed manually. After running these file, the Mosquitto server will receive a message from the client that has subscribed a specific topic if the motion sensor is triggered and broadcast this message to all the clients that also subscribe the same topic.
 
@@ -15,85 +14,33 @@ The second part is another Raspberry Pi connected with a camera, a microphone an
 
 
 
-### Pre-requisites
+### 2.iOS architecture design
 
+#### 2.1 Project story architecture
 
-1. Setup gcloud 
+The AppDelegate contains the app’s startup code, which responds to key changes in the state of the app. All these controllers are declared in AppDelegate which works alongside the app object to ensure the app interacts properly with the system and with other apps. It responds to both temporary interruptions and to changes in the execution state of the app and notifications originating from outside the app, such as remote notifications (also known as push notifications), low-memory warnings, SmartGuard Documentation download completion notifications, and more.
 
-Changes in this tutorial made without python SDK are done with the Google Cloud SDK gcloud command-line tool. This tutorial assumes that you have this tool installed and authorized to work with your account per the documentation.
+The tab bar controller is used to organize the app into one distinct mode of operation. The view hierarchy of a tab bar controller is self contained. It is composed of map view controller, property list table view controller and settings view controller. Each content view controller manages a distinct view hierarchy, and the tab bar controller coordinates the navigation between the view hierarchies.
 
-2. create a service account with 3 roles 
-     - Cloud Scheduler admin
-     - service account token creator
-     - service account user
-  
-  `Example:`
- ![ See image below :](./images/service_account_svc_cloud_scheduler.png)
+The view controllers and table view controllers are the foundation of the app’s internal structure. Each view controller and table view controller manages a portion of the app’s user interface as well as the interactions between that interface and the underlying data. The UIViewController class defines the methods and properties for managing the views, handling events, transitioning from one viewcontroller to another, and coordinating with other parts of the app.
+
                  
 
-### How to deploy cloud functions
+#### 2.2 Data Model
 
-- Cloud Functions can be triggered by messages published to Cloud Pub/Sub topics in the `same GCP project as the function`. 
-- Cloud Pub/Sub is a `globally distributed` message bus that automatically scales as you need it and provides a foundation for building your own robust, global services.
+The Core Data’s functionality depends on the schema created to describe the application’s entities, their properties, and the relationships between them. The managed object model is a set of objects that form together a blueprint describing the managed objects we use in the application, which allows Core Data to map from records in a persistent store to managed objects that we use in the application.
 
-### Event Structure
-- Cloud Functions triggered from Cloud Pub/Sub topic events will be sent an event containing a `PubsubMessage object`. 
-- The `format` of the `PubsubMessage` is as per the published format for `PubsubMessage objects`.
-
-- The payload of the `PubsubMessage` (the data you published to the topic) is stored as a `base64-encoded string` in the data attribute of the PubsubMessage. To extract the payload of the PubsubMessage you need to decode the data attribute.
-
-Option1 : Using gcloud command
-
-```python
-gcloud functions deploy stop_instances --runtime python37 --trigger-resource T
-OPIC_STOP_INSTANCES --trigger-event google.pubsub.topic.publish
-```
-
-- deploy : < Name of your cloud function >
-- --runtime : <You can choose from `Node.js v6` ,`Nodejs v8` & `Python3.7`>
-- --trigger-resource :< Name of your pub/sub Topic >
-- --trigger-event : < How do you want to trigger it eg. by publishing to pubsub >
-
-where TOPIC_NAME is the name of the Cloud Pub/Sub topic to which the function will be subscribed. If the topic doesn't exist, it is created during deployment.
-
-### How to check cloud function logs 
-
-```Python
-gcloud functions logs read --limit 50
-```
-
-#### Output
+As shown by the graph above, in our app we has 2 tables in CoreData which are SmartGuard Documentation Location and Record, their mutual relationships is one-to-many that one Location can have multiple records as the history. The Location table has attributes as the String “title”, “lat”, “long” which are the geo-information, a boolean “beingVisited” which indicates if there is any visitor coming in front of the property at the moment, a String “url1” which stands for the IP address corresponding to the specific Raspberry Pi that is installed on the property. This table Record has the attributes of the String “datetime” that equals to the exact date and time when the data is recorded, namely the moment that motion sensor detects the stranger approaching and the snapshot taken by the camera at the same time. It also contains a String “thumbnail” which is generated by appending a suffix “.jpg” to the “datetime”. Therefore it stands for the filename of the snapshot that camera takes on the detection of the motion and puts into the CoreData. In addition, the snapshot is captured in the server when a visitor visit the location and the user will download the snapshot by sending a request to the server and move the downloaded image from the temp directory to a permanent documents directory and then store the file path in the thumbnail field of the record data model. When entering the RecordTableview, the contents will be retrieved from the matching file path and presented to the imageview showing the snapshot.
 
 
+### 3. Frameworks
 
-## How to deploy cloud scheduler using python sdk
+#### 3.1 Mapkit
+The MapKit framework provides an interface for embedding Apple Map directly into your own screen hence giving user a more direct and convenient view of location based data concerning the app. This framework also provides support for indicating
+user’s current location, annotating on the map, adding overlays, and performing reverse-geocoding lookups to determine placemark information for a given map coordinate. In our case, user can add a new placemark on the map in order to add own customized location, viewing all the existing location as well as viewing the detail of a location and redirect to the Monitor Screen of that specific location.
 
-1. Change into the directory that holds your code
-```
-cd cloud_scheduler
-``` 
-2. Activate virtual env for python so that you have an isolated environment and all the necessary modules.
-
-```
-source setup/venv/venv_cloud_scheduler/bin/activate
-```
-3. use python to deploy
-   
-   Before you deploy ,update the inputs to the below variables 
-
-- PROJECT_ID = "the ID of your project where you want to deploy this cloud scheduler"
-
-- LOCATION_ID = " Provide the location where you want to deplpy"
-Currently only 3 regions are supported US , europe and asia...
-
-`example`:
-LOCATION_ID = "us-central1"
-
-- JOB_NAME
-Update with the name of the job
-`example`:
-JOB_NAME = 'start_instances_at_9am'
-
-The command to deploy is as below.
-
-```python cloud_scheduler_start_instances.py``` 
+#### 3.2 MJPG Streamer
+The MJPG Streamer is used to handle the video stream from server side (Raspberry Pi) to client side (iOS application). The reason we use the MJPG Streamer is that it is compatible with embedded devices such as Raspberry Pi with limited RAM and
+CPU, and it provides a command line instructions to run MJPG Streamer, this will make the configuration of the server very easy as we only need to configure the MJPG Streamer through the terminal and then use the node-cmd to run command
+line instructions to create the stream when the server is running. We use the command “raspistill” to capture the picture from the camera module every 50 milliseconds and configure the input and out of the MJPG streamer by setting up the “input_raspi.so” and “output_http.so” files which enable the MJPG Streamer to stream the JPEG frames to the html page. The user can start the stream by send a request to the server to start capture pictures from the camera module and
+get the stream web page by send another request to the server. The workflow is shown in the following figure.
