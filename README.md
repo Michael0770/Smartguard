@@ -12,7 +12,7 @@ Specially, the first part is a Raspberry Pi connected with a PIR Motion sensor p
 
 The second part is another Raspberry Pi connected with a camera, a microphone and a speaker which enable the user to communicate with the visitors through our iOS application. The video stream is handled by MJPG streamer in the server (Raspberry Pi) and the voice stream is handled by Twilio framework in both client and server side. The frameworks used here will be introduced in part 3 later.
 
-
+ ![ See image below :](https://github.com/Michael0770/smartguard/blob/master/IOT%20Project%20architecture.png)
 
 ### 2.iOS architecture design
 
@@ -24,7 +24,7 @@ The tab bar controller is used to organize the app into one distinct mode of ope
 
 The view controllers and table view controllers are the foundation of the app’s internal structure. Each view controller and table view controller manages a portion of the app’s user interface as well as the interactions between that interface and the underlying data. The UIViewController class defines the methods and properties for managing the views, handling events, transitioning from one viewcontroller to another, and coordinating with other parts of the app.
 
-                 
+ ![ See image below :](https://github.com/Michael0770/smartguard/blob/master/Project%20story%20architecture.png)
 
 #### 2.2 Data Model
 
