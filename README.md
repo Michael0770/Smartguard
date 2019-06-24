@@ -58,3 +58,5 @@ To perform the connection between motion sensor and IOS application, we choose t
 source message broker that implements the MQ Telemetry Transport protocol Mosquitto is an open versions 3.1 and 3.1.1. MQTT provides a lightweight method of carrying out messaging using a publish/subscribe model. We also install a MQTT clients that
 subscribe a topic with the Mosquitto server to publish the message when motion is detected. The MQTT client which used in IOS side is Moscapsule. Moscapsule for iOS is written in Swift and this framework is implemented as a wrapper of Mosquitto library
 and covers almost all mosquitto features. Therefore, we can use it to connect the Mosquitto server in the Raspberry Pi and subscribe the same topic, thus receive the message and send notifications to users when the motion sensor is triggered.
+
+ ![ See image below :](https://github.com/Michael0770/smartguard/blob/master/Workflow%20of%20MQTT.png)
